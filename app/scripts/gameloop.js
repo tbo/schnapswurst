@@ -12,6 +12,10 @@ function update () {
             enemies[i].update();
         }
     }
+    function playerHit() {
+      console.log('Im hit');
+    }
+    game.physics.arcade.overlap(bullets, tank, playerHit, null, this);
 
     if(cursors.right.isDown || 
        cursors.left.isDown ||
@@ -21,7 +25,6 @@ function update () {
     } else {
       currentSpeed = 0;
     }
-
 
     if (cursors.left.isDown && cursors.down.isDown) {
       tank.angle = 135;
@@ -40,23 +43,6 @@ function update () {
     } else if (cursors.up.isDown) {
       tank.angle = -90;
     }
-    // else if (cursors.right.isDown)
-    // {
-    //     tank.angle += 4;
-    // }
-    //
-    // if (cursors.up.isDown)
-    // {
-    //     //  The speed we'll travel at
-    //     currentSpeed = 300;
-    // }
-    // else
-    // {
-    //     if (currentSpeed > 0)
-    //     {
-    //         currentSpeed -= 4;
-    //     }
-    // }
 
     game.physics.arcade.velocityFromRotation(tank.rotation, currentSpeed, tank.body.velocity);
 
@@ -82,6 +68,6 @@ function update () {
 
 function render () {
     // game.debug.text('Active Bullets: ' + bullets.countLiving() + ' / ' + bullets.length, 32, 32);
-    game.debug.text('Enemies: ' + enemiesAlive + ' / ' + enemiesTotal, 32, 32);
+    game.debug.text('Health:' + playerHealth + '% Enemies: ' + enemiesAlive + ' / ' + enemiesTotal, 32, 32);
 }
 

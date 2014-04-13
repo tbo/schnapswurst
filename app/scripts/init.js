@@ -18,6 +18,7 @@ var cursors;
 var bullets;
 var fireRate = 100;
 var nextFire = 0;
+var playerHealth = 100;
 
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
@@ -102,8 +103,8 @@ function create () {
     tank.bringToTop();
     turret.bringToTop();
 
-    logo = game.add.sprite(0, 200, 'logo');
-    logo.fixedToCamera = true;
+    // logo = game.add.sprite(0, 200, 'logo');
+    // logo.fixedToCamera = true;
 
     game.input.onDown.add(removeLogo, this);
 
@@ -120,7 +121,7 @@ function create () {
 
 function removeLogo () {
     game.input.onDown.remove(removeLogo, this);
-    logo.kill();
+    // logo.kill();
 }
 
 

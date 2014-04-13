@@ -1,5 +1,15 @@
 function bulletHitPlayer (tank, bullet) {
+    playerHealth -= 10;
     bullet.kill();
+    if(playerHealth <= 0) {
+      playerDies();
+    }
+}
+
+function playerDies() {
+  tank.kill();
+  turret.kill();
+  shadow.kill();
 }
 
 function bulletHitEnemy (tank, bullet) {
