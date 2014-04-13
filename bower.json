@@ -3,7 +3,8 @@
   "private": true,
   "dependencies": {
     "jquery": "~1.11.0",
-    "phaser-official": "~2.0.3"
+    "phaser-official": "~2.0.3",
+    "socket.io-client": "~0.9.16"
   },
   "devDependencies": {}
 }
