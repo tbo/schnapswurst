@@ -107,8 +107,7 @@ function create () {
 
     game.input.onDown.add(removeLogo, this);
 
-    game.camera.follow(tank);
-    game.camera.deadzone = new Phaser.Rectangle(150, 150, 500, 300);
+    game.camera.follow(tank, Phaser.Camera.FOLLOW_LOCKON);
     game.camera.focusOnXY(0, 0);
 
     cursors = {
