@@ -13,32 +13,52 @@ function update () {
         }
     }
 
-    if (cursors.left.isDown)
-    {
-        tank.angle -= 4;
-    }
-    else if (cursors.right.isDown)
-    {
-        tank.angle += 4;
-    }
-
-    if (cursors.up.isDown)
-    {
-        //  The speed we'll travel at
-        currentSpeed = 300;
-    }
-    else
-    {
-        if (currentSpeed > 0)
-        {
-            currentSpeed -= 4;
-        }
+    if(cursors.right.isDown || 
+       cursors.left.isDown ||
+       cursors.up.isDown ||
+       cursors.down.isDown) {
+      currentSpeed = 200;
+    } else {
+      currentSpeed = 0;
     }
 
-    if (currentSpeed > 0)
-    {
-        game.physics.arcade.velocityFromRotation(tank.rotation, currentSpeed, tank.body.velocity);
+
+    if (cursors.left.isDown && cursors.down.isDown) {
+      tank.angle = 135;
+    }  else if (cursors.left.isDown && cursors.up.isDown) {
+      tank.angle = -135;
+    }  else if (cursors.right.isDown && cursors.up.isDown) {
+      tank.angle = -45;
+    }  else if (cursors.right.isDown && cursors.down.isDown) {
+      tank.angle = 45;
+    }  else if (cursors.left.isDown) {
+      tank.angle = 180;
+    } else if (cursors.right.isDown) {
+      tank.angle = 0;
+    } else if (cursors.down.isDown) {
+      tank.angle = 90;
+    } else if (cursors.up.isDown) {
+      tank.angle = -90;
     }
+    // else if (cursors.right.isDown)
+    // {
+    //     tank.angle += 4;
+    // }
+    //
+    // if (cursors.up.isDown)
+    // {
+    //     //  The speed we'll travel at
+    //     currentSpeed = 300;
+    // }
+    // else
+    // {
+    //     if (currentSpeed > 0)
+    //     {
+    //         currentSpeed -= 4;
+    //     }
+    // }
+
+    game.physics.arcade.velocityFromRotation(tank.rotation, currentSpeed, tank.body.velocity);
 
     land.tilePosition.x = -game.camera.x;
     land.tilePosition.y = -game.camera.y;
