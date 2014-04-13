@@ -20,7 +20,7 @@ var fireRate = 100;
 var nextFire = 0;
 var playerHealth = 100;
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game($(document).width(), $(document).height(), Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload () {
     game.load.atlas('tank', 'assets/games/tanks/tanks.png', 'assets/games/tanks/tanks.json');

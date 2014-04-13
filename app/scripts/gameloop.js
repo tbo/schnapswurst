@@ -12,10 +12,6 @@ function update () {
             enemies[i].update();
         }
     }
-    function playerHit() {
-      console.log('Im hit');
-    }
-    game.physics.arcade.overlap(bullets, tank, playerHit, null, this);
 
     if(cursors.right.isDown || 
        cursors.left.isDown ||
