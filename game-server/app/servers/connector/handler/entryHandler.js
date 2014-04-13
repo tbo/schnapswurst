@@ -17,3 +17,7 @@ var Handler = function(app) {
 Handler.prototype.entry = function(msg, session, next) {
   next(null, {code: 200, msg: 'game server is ok.'});
 };
+
+Handler.prototype.updateLocation = function(msg, session, next) {
+  next(null, {code: 200, msg: 'game server is ok.'});
+};

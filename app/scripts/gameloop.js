@@ -52,13 +52,17 @@ function update () {
 
     turret.x = tank.x;
     turret.y = tank.y;
-
+    ////// pomelo.request("connector.entryHandler.locationUpdate", "hello pomelo", function(data) {
+    //////   console.log(data.msg);
+    ////// });
+    
     turret.rotation = game.physics.arcade.angleToPointer(turret);
 
     if (game.input.activePointer.isDown)
     {
         //  Boom!
         fire();
+
     }
 }
 

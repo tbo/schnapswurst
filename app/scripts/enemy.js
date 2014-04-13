@@ -38,7 +38,7 @@ EnemyTank.prototype.damage = function() {
     if (this.health <= 0)
     {
         this.alive = false;
-
+        explodeAudio.play();
         this.shadow.kill();
         this.tank.kill();
         this.turret.kill();
@@ -65,7 +65,7 @@ EnemyTank.prototype.update = function() {
         if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0)
         {
             this.nextFire = this.game.time.now + this.fireRate;
-
+            enemyGunAudio.play();
             var bullet = this.bullets.getFirstDead();
 
             bullet.reset(this.turret.x, this.turret.y);

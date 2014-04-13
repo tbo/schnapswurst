@@ -19,45 +19,57 @@ var bullets;
 var fireRate = 100;
 var nextFire = 0;
 var playerHealth = 100;
-var pomelo = window.pomelo;
+// var pomelo = window.pomelo;
+//
+// var host = "127.0.0.1";
+// var port = "3010";
+// pomelo.init({
+//   host: host,
+//   port: port,
+//   log: true
+// });
 
-var host = "127.0.0.1";
-var port = "3010";
-function show() {
-  pomelo.init({
-    host: host,
-    port: port,
-    log: true
-  }, function() {
-  pomelo.request("connector.entryHandler.entry", "hello pomelo", function(data) {
-      alert(data.msg);
-    });
-  });
-}
-
-var game = new Phaser.Game($(document).width(), $(document).height(), Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var screenHeight = $(document).height();
+var screenWidth = $(document).width();
+var game = new Phaser.Game(screenWidth, screenHeight, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var playerGunAudio = null;
+var enemyGunAudio = null;
 
 function preload () {
-    game.load.atlas('tank', 'assets/games/tanks/tanks.png', 'assets/games/tanks/tanks.json');
+    game.load.atlas('tank', 'assets/games/tanks/tanks_empty.png', 'assets/games/tanks/tanks.json');
+    game.load.atlas('empty', 'assets/games/tanks/tanks_empty.png', 'assets/games/tanks/tanks.json');
     game.load.atlas('enemy', 'assets/games/tanks/enemy-tanks.png', 'assets/games/tanks/tanks.json');
     game.load.image('logo', 'assets/games/tanks/logo.png');
+    game.load.image('turret', 'assets/games/tanks/turret.png');
     game.load.image('bullet', 'assets/games/tanks/bullet.png');
     game.load.image('earth', 'assets/games/tanks/scorched_earth.png');
     game.load.spritesheet('kaboom', 'assets/games/tanks/explosion.png', 64, 64, 23);
+    game.load.audio('shot', ['assets/audio/SoundEffects/shotgun_low.wav']);
+    game.load.audio('cannon', ['assets/audio/SoundEffects/shot1_low.wav']);
+    game.load.audio('explode', ['assets/audio/SoundEffects/explode1.wav']);
+    game.load.audio('gameover', ['assets/audio/SoundEffects/player_death.wav']);
+    game.load.audio('music', ['assets/audio/teenspirit.mp3']);
 }
 
 function create () {
     //  Resize our game world to be a 2000 x 2000 square
     game.world.setBounds(-1000, -1000, 2000, 2000);
+    playerGunAudio = game.add.audio('shot');
+    enemyGunAudio = game.add.audio('cannon');
+    explodeAudio = game.add.audio('explode');
+    gameoverAudio = game.add.audio('gameover');
+
+    music = game.add.audio('music',1,true);
+    music.play('',0,1,true);
 
     //  Our tiled scrolling background
-    land = game.add.tileSprite(0, 0, 800, 600, 'earth');
+    land = game.add.tileSprite(0, 0, screenWidth, screenHeight, 'earth');
     land.fixedToCamera = true;
 
-    //  The base of our tank
-    tank = game.add.sprite(0, 0, 'tank', 'tank1');
+    tank = game.add.sprite(0, 0, 'empty', 'shadow');
     tank.anchor.setTo(0.5, 0.5);
-    tank.animations.add('move', ['tank1', 'tank2', 'tank3', 'tank4', 'tank5', 'tank6'], 20, true);
+    //  The base of our tank
+    // tank.animations.add('move', ['tank1', 'tank2', 'tank3', 'tank4', 'tank5', 'tank6'], 20, true);
 
     //  This will force it to decelerate and limit its speed
     game.physics.enable(tank, Phaser.Physics.ARCADE);
@@ -66,8 +78,8 @@ function create () {
     tank.body.collideWorldBounds = true;
 
     //  Finally the turret that we place on-top of the tank body
-    turret = game.add.sprite(0, 0, 'tank', 'turret');
-    turret.anchor.setTo(0.3, 0.5);
+    turret = game.add.image(0, 0, 'turret');
+    turret.anchor.setTo(0.3, 0.62);
 
     //  The enemies bullet group
     enemyBullets = game.add.group();
@@ -92,7 +104,7 @@ function create () {
     }
 
     //  A shadow below our tank
-    shadow = game.add.sprite(0, 0, 'tank', 'shadow');
+    shadow = game.add.sprite(0, 0, 'empty', 'shadow');
     shadow.anchor.setTo(0.5, 0.5);
 
     //  Our bullet group
